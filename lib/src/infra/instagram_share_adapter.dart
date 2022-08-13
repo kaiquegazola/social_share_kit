@@ -7,19 +7,28 @@ class InstragramShareAdapter {
 
   Future<void> story() async {
     try {
-      await socialShare.share();
+      await socialShare.share(SocialShareEntity(
+        platform: SocialPlaform.instagram,
+        content: null,
+      ));
     } catch (_) {}
   }
 
   Future<void> post() async {
     try {
-      await socialShare.share();
+      await socialShare.share(SocialShareEntity(
+        platform: SocialPlaform.instagram,
+        content: null,
+      ));
     } catch (_) {}
   }
 
   Future<void> direct() async {
     try {
-      await socialShare.share();
+      await socialShare.share(SocialShareEntity(
+        platform: SocialPlaform.instagram,
+        content: null,
+      ));
     } catch (_) {}
   }
 }
