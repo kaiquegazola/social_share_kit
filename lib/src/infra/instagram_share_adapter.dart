@@ -10,6 +10,7 @@ class InstragramShareAdapter {
       await socialShare.share(SocialShareEntity(
         platform: SocialPlaform.instagram,
         content: {},
+        type: '',
       ));
     } catch (_) {}
   }
@@ -19,6 +20,7 @@ class InstragramShareAdapter {
       await socialShare.share(SocialShareEntity(
         platform: SocialPlaform.instagram,
         content: {},
+        type: '',
       ));
     } catch (_) {}
   }
@@ -28,6 +30,7 @@ class InstragramShareAdapter {
       await socialShare.share(SocialShareEntity(
         platform: SocialPlaform.instagram,
         content: {},
+        type: '',
       ));
     } catch (_) {}
   }
