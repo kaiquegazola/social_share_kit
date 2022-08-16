@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:social_share_kit/social_share_kit.dart';
+import 'package:social_share_kit_example/utils/file_loader.dart';
+import 'package:social_share_kit_example/widgets/platform_icon_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,35 +15,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _socialShareKitPlugin = SocialShareKit();
+  final availableAppsFuture = SocialShareKit.getAvailableApps();
+  final fileLoader = FileLoader.instance;
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion = await _socialShareKitPlugin.getPlatformVersion() ??
-          'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
   }
 
   @override
@@ -52,12 +28,45 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('SocialShareKit Example'),
         ),
         body: Center(
           child: Column(
             children: [
-              Text('Running on: $_platformVersion\n'),
+              Text(
+                'Available apps:',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              FutureBuilder<Map<String, dynamic>?>(
+                future: availableAppsFuture,
+                builder: (context, snapshot) {
+                  final availableApps = snapshot.data;
+                  if (availableApps != null) {
+                    availableApps.removeWhere((key, value) => value == false);
+                    return Wrap(
+                      children: [
+                        for (final app in availableApps.entries) ...[
+                          PlatformIconButton(
+                            platformName: app.key,
+                            action: '',
+                            onPressed: () {
+                              // SocialShareKit.instagram.direct(
+                              //   file: fileLoader.image,
+                              //   contentUrl: 'https://www.kaique.dev/',
+                              // );
+
+                              SocialShareKit.tiktok.greenSreenVideo(
+                                file: fileLoader.video,
+                              );
+                            },
+                          )
+                        ]
+                      ],
+                    );
+                  }
+                  return const CircularProgressIndicator();
+                },
+              ),
             ],
           ),
         ),

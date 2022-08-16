@@ -1,1 +1,1 @@
-export 'social_share.dart';
+export 'social_share_use_case.dart';

@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  font_awesome_flutter: ^10.1.0
   social_share_kit:
     path: ../
 
@@ -23,3 +24,4 @@ flutter:
   uses-material-design: true
   assets:
    - assets/spacex-unsplash.jpg
+   - assets/iguassu-falls.mp4

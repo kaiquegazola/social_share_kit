@@ -1,7 +1,33 @@
-import 'package:social_share_kit/social_share_kit_platform_interface.dart';
+import 'package:get_it/get_it.dart';
+import 'package:social_share_kit/src/di.dart';
+import 'package:social_share_kit/src/domain/domain.dart';
+import 'package:social_share_kit/src/domain/platforms/platforms.dart';
+import 'package:social_share_kit/src/social_share_kit_interface.dart';
 
-class SocialShareKit {
-  Future<String?> getPlatformVersion() {
-    return SocialShareKitPlatform.instance.getPlatformVersion();
+class _SocialShareKit implements SocialShareKitInterface {
+  _SocialShareKit._() {
+    Di.init();
+  }
+
+  static final _SocialShareKit instance = _SocialShareKit._();
+
+  /// Static getter to get the Facebook share instance
+  @override
+  InstagramPlatform get instagram => GetIt.I.get();
+
+  /// Static getter to get the Facebook share instance
+  @override
+  TikTokPlatform get tiktok => GetIt.I.get();
+
+  /// Returns an Map with the possible apps to share
+  ///
+  /// May return an empty map if it is not possible to get the share available
+  /// apps list.
+  @override
+  Future<Map<String, bool>> getAvailableApps() {
+    return GetIt.I.get<AvailableAppsPlatform>().getAvailableApps();
   }
 }
+
+// ignore: non_constant_identifier_names
+SocialShareKitInterface get SocialShareKit => _SocialShareKit.instance;

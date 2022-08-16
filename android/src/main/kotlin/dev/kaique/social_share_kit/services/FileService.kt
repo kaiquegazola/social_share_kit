@@ -9,7 +9,6 @@ import androidx.core.content.FileProvider
 import java.io.File
 
 object FileService : FileProvider() {
-
     fun exportUriForFile(context: Context, filePath: String): Uri {
         return try {
             val file = File(filePath)
@@ -29,20 +28,12 @@ object FileService : FileProvider() {
         )
     }
 
-    fun getFileType(type: String): String {
-        return when (type) {
-            "video" -> {
-                "video/*"
-            }
-            "image" -> {
-                "image/*"
-            }
-            "audio" -> {
-                "audio/*"
-            }
-            else -> {
-                "*/*"
-            }
+    fun getMimeType(context: Context, uri: Uri): String {
+        return try {
+            val contentResolver = context.contentResolver
+            contentResolver.getType(uri).toString()
+        } catch (e: Exception) {
+            throw Exception("Error resolving MimeType for file $uri", e)
         }
     }
 }

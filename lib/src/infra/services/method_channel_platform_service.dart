@@ -1,0 +1,31 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:social_share_kit/src/domain/services/platform_service_interface.dart';
+
+/// An implementation of [PlatformServiceInterface] that uses method
+/// channels to provide information.
+class MethodChannelPlatformService extends PlatformServiceInterface {
+  /// The method channel used to interact with the native platform.
+  @visibleForTesting
+  final methodChannel = const MethodChannel('social_share_kit');
+
+  @override
+  Future<Map<String, bool>> getAvailableApps() async {
+    final availableApps = await methodChannel.invokeMapMethod<String, bool>(
+      'getAvailableApps',
+    );
+    if (availableApps != null) {
+      return availableApps;
+    }
+    return {};
+  }
+
+  @override
+  Future<T> share<T>(Map<String, dynamic> arguments) async {
+    final shared = await methodChannel.invokeMethod<T>('share', arguments);
+    if (shared == null) {
+      throw Exception("MethodChannelPlatformService can't share $arguments");
+    }
+    return shared;
+  }
+}

@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="dev.kaique.social_share_kit_example">
    <application
         android:label="social_share_kit_example"
@@ -30,5 +31,20 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+       <!-- TikTok Client key -->
+       <meta-data android:name="TikTokAppID"
+           android:value="awr3myql0y0792fg"/>
+
+       <provider
+           android:name="androidx.core.content.FileProvider"
+           android:authorities="${applicationId}.dev.kaique.social_share_kit"
+           android:exported="false"
+           android:grantUriPermissions="true"
+           tools:replace="android:authorities">
+           <meta-data
+               android:name="android.support.FILE_PROVIDER_PATHS"
+               android:resource="@xml/file_provider_paths" />
+       </provider>
     </application>
 </manifest>

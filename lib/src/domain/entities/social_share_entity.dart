@@ -1,3 +1,5 @@
+import 'package:social_share_kit/src/domain/domain.dart';
+
 class SocialShareEntity {
   SocialShareEntity({
     required this.platform,
@@ -6,16 +8,6 @@ class SocialShareEntity {
   });
 
   final SocialPlaform platform;
-  final Map content;
+  final Map<String, dynamic> content;
   final String type;
-}
-
-enum SocialPlaform {
-  facebook,
-  instagram,
-  telegram,
-  whatsapp,
-  messenger,
-  tiktok,
-  twitter
 }
