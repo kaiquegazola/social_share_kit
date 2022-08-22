@@ -12,9 +12,16 @@ class TikTokPlatformAdapter implements TikTokPlatform {
   final SocialPlaform platform = SocialPlaform.tiktok;
 
   @override
-  Future<bool> greenSreenPhoto({File? file, String? contentUrl}) {
-    // TODO: implement greenSreenPhoto
-    throw UnimplementedError();
+  Future<bool> greenSreenImage({File? file, String? contentUrl}) {
+    return _socialShare.share<bool>(
+      SocialShareEntity(
+        platform: platform,
+        content: TikTokDTO(
+          file: file,
+        ).toImageMap(),
+        type: TikTokShareType.greenScreenImage.name,
+      ),
+    );
   }
 
   @override
@@ -31,8 +38,8 @@ class TikTokPlatformAdapter implements TikTokPlatform {
   }
 
   @override
-  Future<bool> photo({File? file, String? contentUrl}) {
-    // TODO: implement photo
+  Future<bool> image({File? file, String? contentUrl}) {
+    // TODO: implement image
     throw UnimplementedError();
   }
 

@@ -13,9 +13,9 @@ class TikTokDTO {
     };
   }
 
-  Map<String, dynamic> toPhotoMap() {
+  Map<String, dynamic> toImageMap() {
     return <String, dynamic>{
-      'photoPath': file?.path,
+      'imagePath': file?.path,
     };
   }
 }

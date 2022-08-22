@@ -34,14 +34,14 @@ This plugin was heavily inspired on [social_share](https://pub.dev/packages/soci
     - [ ] Direct
 - [ ] Messenger Share
     - [ ] Video
-    - [ ] Photo
+    - [ ] Image
 - [ ] Telegram
     - [ ] Image
     - [ ] Video
 - [ ] TikTok Share
     - [ ] Green Screen
         - [ ] Video
-        - [ ] Photo
+        - [ ] Image
 - [ ] WhatsApp
     - [ ] Status
     - [ ] Image

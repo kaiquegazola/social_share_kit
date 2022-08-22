@@ -54,9 +54,13 @@ class _MyAppState extends State<MyApp> {
                               //   file: fileLoader.image,
                               //   contentUrl: 'https://www.kaique.dev/',
                               // );
-
-                              SocialShareKit.tiktok.greenSreenVideo(
-                                file: fileLoader.video,
+                              //
+                              // SocialShareKit.tiktok.greenSreenVideo(
+                              //   file: fileLoader.video,
+                              // );
+                              //
+                              SocialShareKit.tiktok.greenSreenImage(
+                                file: fileLoader.image,
                               );
                             },
                           )

@@ -1,6 +1,6 @@
 enum TikTokShareType {
-  photo,
+  image,
   video,
-  greenScreenPhoto,
+  greenScreenImage,
   greenScreenVideo,
 }
