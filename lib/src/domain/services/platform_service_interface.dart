@@ -6,5 +6,6 @@ abstract class PlatformServiceInterface extends PlatformInterface {
   static final Object _token = Object();
 
   Future<Map<String, bool>> getAvailableApps();
+  Future<String?> getMd5Signature();
   Future<T> share<T>(Map<String, dynamic> arguments);
 }

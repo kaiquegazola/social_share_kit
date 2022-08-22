@@ -6,6 +6,7 @@ class Di {
   static void init() {
     _initMethodChannel();
     _initAvailableApps();
+    _initAppSignature();
     _initSocialShare();
     _initInstagram();
     _tiktokInstagram();
@@ -25,6 +26,14 @@ class Di {
     );
   }
 
+  static void _initAppSignature() {
+    GetIt.I.registerFactory<AppSignaturePlatform>(
+      () => AppSignaturePlatformAdapter(
+        platformService: GetIt.I.get(),
+      ),
+    );
+  }
+
   static void _initSocialShare() {
     GetIt.I.registerSingleton<SocialShareUseCase>(
       SocialShareUseCaseImpl(
@@ -35,7 +44,7 @@ class Di {
 
   static void _initInstagram() {
     GetIt.I.registerFactory<InstagramPlatform>(
-          () => InstagramPlatformAdapter(
+      () => InstagramPlatformAdapter(
         socialShare: GetIt.I.get(),
       ),
     );
@@ -43,7 +52,7 @@ class Di {
 
   static void _tiktokInstagram() {
     GetIt.I.registerFactory<TikTokPlatform>(
-          () => TikTokPlatformAdapter(
+      () => TikTokPlatformAdapter(
         socialShare: GetIt.I.get(),
       ),
     );

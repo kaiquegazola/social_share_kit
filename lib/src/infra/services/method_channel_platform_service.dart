@@ -28,4 +28,11 @@ class MethodChannelPlatformService extends PlatformServiceInterface {
     }
     return shared;
   }
+
+  @override
+  Future<String?> getMd5Signature() {
+    return methodChannel.invokeMethod<String?>(
+      'getMd5Signature',
+    );
+  }
 }

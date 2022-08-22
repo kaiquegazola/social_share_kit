@@ -27,6 +27,11 @@ class _SocialShareKit implements SocialShareKitInterface {
   Future<Map<String, bool>> getAvailableApps() {
     return GetIt.I.get<AvailableAppsPlatform>().getAvailableApps();
   }
+
+  @override
+  Future<String?> getMd5Signature() {
+    return GetIt.I.get<AppSignaturePlatform>().getMd5AppSignature();
+  }
 }
 
 // ignore: non_constant_identifier_names

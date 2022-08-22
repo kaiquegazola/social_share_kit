@@ -16,6 +16,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final availableAppsFuture = SocialShareKit.getAvailableApps();
+  final md5SignatureFuture = SocialShareKit.getMd5Signature();
   final fileLoader = FileLoader.instance;
 
   @override
@@ -71,6 +72,20 @@ class _MyAppState extends State<MyApp> {
                   return const CircularProgressIndicator();
                 },
               ),
+              Text(
+                'Md5 hash:',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              FutureBuilder<String?>(
+                future: md5SignatureFuture,
+                builder: (context, snapshot) {
+                  return SelectableText.rich(
+                    TextSpan(
+                      text: snapshot.data ?? '',
+                    ),
+                  );
+                },
+              )
             ],
           ),
         ),

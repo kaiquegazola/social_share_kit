@@ -8,6 +8,7 @@ import dev.kaique.social_share_kit.enums.PlatformEnum
 import dev.kaique.social_share_kit.platforms.instagram.InstagramPlatform
 import dev.kaique.social_share_kit.platforms.telegram.TelegramPlatform
 import dev.kaique.social_share_kit.platforms.tiktok.TiktokPlatform
+import dev.kaique.social_share_kit.services.PackageService
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -54,6 +55,9 @@ class SocialShareKitPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "getAvailableApps" -> {
                 getAvailableApps(context, result)
             }
+            "getMd5Signature" -> {
+                getMd5Signature(context, result)
+            }
             else -> {
                 result.notImplemented()
             }
@@ -71,6 +75,20 @@ class SocialShareKitPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
             }
             result.success(apps)
+        } catch (e: Exception) {
+            result.error(
+                e.cause.toString(),
+                e.message,
+                null,
+            )
+        }
+    }
+
+
+    private fun getMd5Signature(context: Context, result: Result) {
+        try {
+            val signature = PackageService.getAppSignatureMD5(context)
+            result.success(signature)
         } catch (e: Exception) {
             result.error(
                 e.cause.toString(),
