@@ -1,4 +1,4 @@
 #import <Flutter/Flutter.h>
 
-@interface SocialShareKitPlugin : NSObject<FlutterPlugin>
+@interface SocialShareKitPlugin : NSObject <FlutterPlugin>
 @end

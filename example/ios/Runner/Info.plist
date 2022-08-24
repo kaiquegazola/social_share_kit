@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>${PRODUCT_NAME} uses photos for share plugin</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -45,5 +47,36 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tiktokopensdk</string>
+		<string>tiktoksharesdk</string>
+		<string>snssdk1180</string>
+		<string>snssdk1233</string>
+        <string>instagram</string>
+        <string>instagram-stories</string>
+        <string>fb</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
+        <string>fbapi</string>
+        <string>facebook-reels</string>
+        <string>facebook-stories</string>
+        <string>fb-messenger-share-api</string>
+        <string>fb-messenger</string>
+        <string>tg</string>
+        <string>whatsapp</string>
+        <string>twitter</string>
+	</array>
+	<key>TikTokAppID</key>
+	<string>awr3myql0y0792fg</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>awr3myql0y0792fg</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
