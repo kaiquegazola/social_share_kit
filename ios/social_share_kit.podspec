@@ -14,6 +14,7 @@ A Flutter plugin thats support share files to social media like Tiktok, Instagra
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
+  s.static_framework = true
   s.dependency 'Flutter'
   s.dependency 'TikTokOpenSDK'
   s.platform = :ios, '9.0'
