@@ -12,7 +12,7 @@ class InstagramPlatformAdapter implements InstagramPlatform {
   final SocialPlaform platform = SocialPlaform.instagram;
 
   @override
-  Future<bool> direct({File? file, String? contentUrl}) {
+  Future<bool> direct({required File file, String? contentUrl}) {
     return _socialShare.share<bool>(
       SocialShareEntity(
         platform: platform,
@@ -27,7 +27,7 @@ class InstagramPlatformAdapter implements InstagramPlatform {
   }
 
   @override
-  Future<bool> post({File? file, String? contentUrl}) {
+  Future<bool> post({required File file, String? contentUrl}) {
     return _socialShare.share<bool>(
       SocialShareEntity(
         platform: platform,
@@ -42,7 +42,7 @@ class InstagramPlatformAdapter implements InstagramPlatform {
   }
 
   @override
-  Future<bool> story({File? file, String? contentUrl}) {
+  Future<bool> story({required File file, String? contentUrl}) {
     return _socialShare.share<bool>(
       SocialShareEntity(
         platform: platform,
@@ -52,6 +52,19 @@ class InstagramPlatformAdapter implements InstagramPlatform {
           contentUrl: contentUrl,
         ).toMap(),
         type: InstagramShareType.story.name,
+      ),
+    );
+  }
+
+  @override
+  Future<bool> directMessage({required String message}) {
+    return _socialShare.share<bool>(
+      SocialShareEntity(
+        platform: platform,
+        content: InstagramDTO(
+          textMessage: message,
+        ).toMap(),
+        type: InstagramShareType.directText.name,
       ),
     );
   }

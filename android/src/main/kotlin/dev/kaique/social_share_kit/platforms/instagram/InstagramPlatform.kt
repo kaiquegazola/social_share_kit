@@ -1,10 +1,10 @@
 package dev.kaique.social_share_kit.platforms.instagram
 
 import android.app.Activity
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.core.content.ContextCompat.startActivity
 import dev.kaique.social_share_kit.services.FileService
 import io.flutter.plugin.common.MethodChannel
 
@@ -14,6 +14,7 @@ object InstagramPlatform {
     private const val PARAM_NAME_FILE_PATH: String = "filePath"
     private const val PARAM_NAME_BACKGROUND_PATH: String = "backgroundPath"
     private const val PARAM_NAME_CONTENT_URL: String = "contentUrl"
+    private const val PARAM_NAME_TEXT_MESSAGE: String = "textMessage"
     private const val PACKAGE_NAME: String = "com.instagram.android"
 
     fun threatType(
@@ -27,6 +28,7 @@ object InstagramPlatform {
             "story" -> shareStory(content, context, activity, result)
             "post" -> sharePost(content, context, activity, result)
             "direct" -> shareDirect(content, context, activity, result)
+            "directText" -> shareDirectText(content, context, activity, result)
             else -> throw Exception("$type is not a valid TelegramPlatform type")
         }
 
@@ -166,11 +168,11 @@ object InstagramPlatform {
             intent.type = fileUri?.let { FileService.getMimeType(context, it) }
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.putExtra(Intent.EXTRA_STREAM, fileUri);
+            intent.putExtra(Intent.EXTRA_STREAM, fileUri)
             intent.putExtra("content_url", contentUrl)
             intent.putExtra("source_application", context.packageName)
-            intent.putExtra(Intent.EXTRA_TITLE, contentUrl);
-            intent.setPackage("com.instagram.android");
+            intent.putExtra(Intent.EXTRA_TITLE, contentUrl)
+            intent.setPackage("com.instagram.android")
 
             if (backgroundUri != null) {
                 intent.setDataAndType(
@@ -178,6 +180,40 @@ object InstagramPlatform {
                     FileService.getMimeType(context, backgroundUri)
                 )
             }
+
+            if (activity.packageManager.resolveActivity(intent, 0) != null) {
+                context.startActivity(intent)
+                result.success(true)
+            } else {
+                result.success(true)
+            }
+
+        } catch (e: Exception) {
+            result.error(
+                e.cause.toString(),
+                e.message,
+                null,
+            )
+        }
+    }
+
+    private fun shareDirectText(
+        content: HashMap<*, *>,
+        context: Context,
+        activity: Activity,
+        result: MethodChannel.Result
+    ) {
+
+        try {
+            val textMessage = content[PARAM_NAME_TEXT_MESSAGE] as String?
+
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, textMessage)
+            intent.component = ComponentName(
+                "com.instagram.android",
+                "com.instagram.direct.share.handler.DirectShareHandlerActivity",
+            )
 
             if (activity.packageManager.resolveActivity(intent, 0) != null) {
                 context.startActivity(intent)
