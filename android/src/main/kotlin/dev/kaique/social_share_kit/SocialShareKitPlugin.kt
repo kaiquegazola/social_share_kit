@@ -7,7 +7,7 @@ import androidx.annotation.NonNull
 import dev.kaique.social_share_kit.enums.PlatformEnum
 import dev.kaique.social_share_kit.platforms.instagram.InstagramPlatform
 import dev.kaique.social_share_kit.platforms.telegram.TelegramPlatform
-import dev.kaique.social_share_kit.platforms.tiktok.TiktokPlatform
+import dev.kaique.social_share_kit.platforms.tiktok.TikTokPlatform
 import dev.kaique.social_share_kit.services.PackageService
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -48,7 +48,7 @@ class SocialShareKitPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                         InstagramPlatform.threatType(type, content, context, activity, result)
                     }
                     "tiktok" -> {
-                        TiktokPlatform.threatType(type, content, context, activity, result)
+                        TikTokPlatform.threatType(type, content, context, activity, result)
                     }
                 }
             }

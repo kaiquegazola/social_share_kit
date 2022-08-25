@@ -9,43 +9,57 @@ class TikTokPlatformAdapter implements TikTokPlatform {
   }) : _socialShare = socialShare;
 
   final SocialShareUseCase _socialShare;
-  final SocialPlaform platform = SocialPlaform.tiktok;
+  final SocialPlaform _platform = SocialPlaform.tiktok;
 
   @override
-  Future<bool> greenSreenImage({File? file, String? contentUrl}) {
+  Future<bool> greenSreenImage({File? file}) {
     return _socialShare.share<bool>(
       SocialShareEntity(
-        platform: platform,
+        platform: _platform,
         content: TikTokDTO(
           file: file,
-        ).toImageMap(),
+        ).toMap(),
         type: TikTokShareType.greenScreenImage.name,
       ),
     );
   }
 
   @override
-  Future<bool> greenSreenVideo({File? file, String? contentUrl}) {
+  Future<bool> greenSreenVideo({File? file}) {
     return _socialShare.share<bool>(
       SocialShareEntity(
-        platform: platform,
+        platform: _platform,
         content: TikTokDTO(
           file: file,
-        ).toVideoMap(),
+        ).toMap(),
         type: TikTokShareType.greenScreenVideo.name,
       ),
     );
   }
 
   @override
-  Future<bool> image({File? file, String? contentUrl}) {
-    // TODO: implement image
-    throw UnimplementedError();
+  Future<bool> image({File? file}) {
+    return _socialShare.share<bool>(
+      SocialShareEntity(
+        platform: _platform,
+        content: TikTokDTO(
+          file: file,
+        ).toMap(),
+        type: TikTokShareType.image.name,
+      ),
+    );
   }
 
   @override
-  Future<bool> video({File? file, String? contentUrl}) {
-    // TODO: implement video
-    throw UnimplementedError();
+  Future<bool> video({File? file}) {
+    return _socialShare.share<bool>(
+      SocialShareEntity(
+        platform: _platform,
+        content: TikTokDTO(
+          file: file,
+        ).toMap(),
+        type: TikTokShareType.video.name,
+      ),
+    );
   }
 }

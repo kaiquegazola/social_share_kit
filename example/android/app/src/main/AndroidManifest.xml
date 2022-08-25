@@ -36,11 +36,6 @@
        <meta-data android:name="TikTokAppID"
            android:value="awr3myql0y0792fg"/>
 
-       <activity
-           android:name="${applicationId}.dev.kaique.social_share_kit.platforms.tiktok.TiktokEntryActivity"
-           android:exported="true">
-       </activity>
-
        <provider
            android:name="androidx.core.content.FileProvider"
            android:authorities="${applicationId}.dev.kaique.social_share_kit"
