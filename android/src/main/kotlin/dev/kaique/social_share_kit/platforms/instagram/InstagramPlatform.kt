@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import dev.kaique.social_share_kit.services.FileService
 import io.flutter.plugin.common.MethodChannel
@@ -207,13 +208,12 @@ object InstagramPlatform {
         try {
             val textMessage = content[PARAM_NAME_TEXT_MESSAGE] as String?
 
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "text/plain"
-            intent.putExtra(Intent.EXTRA_TEXT, textMessage)
-            intent.component = ComponentName(
-                "com.instagram.android",
-                "com.instagram.direct.share.handler.DirectShareHandlerActivity",
-            )
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                putExtra(Intent.EXTRA_TEXT, textMessage)
+                setPackage("com.instagram.android")
+            }
 
             if (activity.packageManager.resolveActivity(intent, 0) != null) {
                 context.startActivity(intent)

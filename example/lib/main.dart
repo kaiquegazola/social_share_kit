@@ -60,8 +60,8 @@ class _MyAppState extends State<MyApp> {
                               //   file: fileLoader.video,
                               // );
                               //
-                              SocialShareKit.tiktok.greenSreenImage(
-                                file: fileLoader.image,
+                              SocialShareKit.instagram.directMessage(
+                                message: 'Hi from Flutter',
                               );
                             },
                           )
