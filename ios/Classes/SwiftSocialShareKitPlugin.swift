@@ -31,6 +31,9 @@ public class SwiftSocialShareKitPlugin: NSObject, FlutterPlugin {
             case "tiktok":
                 TikTokPlatform.threatType(type: type, content: content, result: result)
                 break
+            case "instagram":
+                InstagramPlatform.threatType(type: type, content: content, result: result)
+                break
             default:
                 result(FlutterError(code: "platformNotImplemented", message: "Platform \(platform) is not implemented.", details: nil))
             }

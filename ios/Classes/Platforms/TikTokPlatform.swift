@@ -17,7 +17,6 @@ class TikTokPlatform {
         case "video":
             shareVideo(content: content, result: result, greenScreen: false)
             break
-
         case "greenScreenVideo":
             shareVideo(content: content, result: result, greenScreen: true)
             break
@@ -46,7 +45,7 @@ class TikTokPlatform {
             request.mediaType = TikTokOpenSDKShareMediaType.video
             request.localIdentifiers = mediaLocalIdentifiers
             request.shareFormat = greenScreen ? TikTokOpenSDKShareFormatType.greenScreen : TikTokOpenSDKShareFormatType.normal
-            
+
             let isSuccess = request.send(completionBlock: { resp -> Void in
                 FileUtils.deleteTempAsset(assetToDelete: asset)
                 result(resp.isSucceed)
