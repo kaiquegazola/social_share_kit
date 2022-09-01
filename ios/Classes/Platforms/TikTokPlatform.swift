@@ -5,8 +5,7 @@ import UIKit
 
 
 class TikTokPlatform {
-    private static var PARAM_NAME_VIDEO_PATH: String = "videoPath"
-    private static var PARAM_NAME_IMAGE_PATH: String = "imagePath"
+    private static var PARAM_NAME_FILE_PATH: String = "filePath"
     private var assetToDelete: PHAsset?
 
     static func threatType(type: String, content: Dictionary<String, Any?>, result: @escaping FlutterResult) {
@@ -30,7 +29,7 @@ class TikTokPlatform {
     }
 
     private static func shareVideo(content: Dictionary<String, Any?>, result: @escaping FlutterResult, greenScreen: Bool) {
-        guard let videoPath = content[PARAM_NAME_VIDEO_PATH] as? String else {
+        guard let videoPath = content[PARAM_NAME_FILE_PATH] as? String else {
             return
         }
 
@@ -62,7 +61,7 @@ class TikTokPlatform {
 
 
     private static func shareImage(content: Dictionary<String, Any?>, result: @escaping FlutterResult, greenScreen: Bool) {
-        guard let imagePath = content[PARAM_NAME_IMAGE_PATH] as? String else {
+        guard let imagePath = content[PARAM_NAME_FILE_PATH] as? String else {
             return
         }
 

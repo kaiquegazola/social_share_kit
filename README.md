@@ -21,7 +21,7 @@ This plugin was heavily inspired on [social_share](https://pub.dev/packages/soci
 
 ## 📱 Supported platforms
 - Android 4.1+
-- iOS 8.0+
+- iOS 11+
 
 ## ✨ Features
 - [ ] Copy to clipboard

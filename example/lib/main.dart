@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:social_share_kit/social_share_kit.dart';
 import 'package:social_share_kit_example/utils/file_loader.dart';
@@ -56,13 +58,13 @@ class _MyAppState extends State<MyApp> {
                               //   contentUrl: 'https://www.kaique.dev/',
                               // );
                               //
-                              // SocialShareKit.tiktok.greenSreenVideo(
-                              //   file: fileLoader.video,
-                              // );
-                              //
-                              SocialShareKit.instagram.directMessage(
-                                message: 'Hi from Flutter',
+                              SocialShareKit.tiktok.greenSreenImage(
+                                file: fileLoader.image,
                               );
+                              //
+                              // SocialShareKit.instagram.directMessage(
+                              //   message: 'Hi from Flutter',
+                              // );
                             },
                           )
                         ]
@@ -72,20 +74,22 @@ class _MyAppState extends State<MyApp> {
                   return const CircularProgressIndicator();
                 },
               ),
-              Text(
-                'Md5 hash:',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              FutureBuilder<String?>(
-                future: md5SignatureFuture,
-                builder: (context, snapshot) {
-                  return SelectableText.rich(
-                    TextSpan(
-                      text: snapshot.data ?? '',
-                    ),
-                  );
-                },
-              )
+              if (Platform.isAndroid) ...[
+                Text(
+                  'Md5 hash:',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                FutureBuilder<String?>(
+                  future: md5SignatureFuture,
+                  builder: (context, snapshot) {
+                    return SelectableText.rich(
+                      TextSpan(
+                        text: snapshot.data ?? '',
+                      ),
+                    );
+                  },
+                ),
+              ],
             ],
           ),
         ),

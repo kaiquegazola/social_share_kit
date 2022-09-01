@@ -31,7 +31,7 @@ class InstagramPlatform {
             return
         }
 
-        DispatchQueue.main.async {
+        DispatchQueue.main.async(execute: {
             let shareUrl = "instagram://sharesheet?text=" + (textMessage.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")
 
             guard let url = URL(string: shareUrl) else {
@@ -40,11 +40,11 @@ class InstagramPlatform {
             }
 
             if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.openURL(url)
+                UIApplication.shared.open(url)
             } else {
                 result(false)
             }
-        }
+        })
 
     }
 
