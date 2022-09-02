@@ -32,14 +32,15 @@ This plugin was heavily inspired on [social_share](https://pub.dev/packages/soci
 - [ ] Instagram Share
   - [ ] Story
   - [ ] Post
-  - [ ] Direct
+  - [x] Direct Text
 - [ ] Messenger Share
   - [ ] Video
   - [ ] Image
+  - [x] Link
 - [ ] Telegram
   - [ ] Image
   - [ ] Video
-- [ ] TikTok Share
+- [x] TikTok Share
   - [x] Green Screen
     - [x] Video
     - [x] Image

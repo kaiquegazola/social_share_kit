@@ -1,5 +1,7 @@
-import 'package:flutter/foundation.dart';
+import 'dart:io';
+
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 import 'package:social_share_kit/src/domain/services/platform_service_interface.dart';
 
 /// An implementation of [PlatformServiceInterface] that uses method
@@ -30,9 +32,13 @@ class MethodChannelPlatformService extends PlatformServiceInterface {
   }
 
   @override
-  Future<String?> getMd5Signature() {
-    return methodChannel.invokeMethod<String?>(
-      'getMd5Signature',
-    );
+  Future<String?> getMd5Signature() async {
+    if (Platform.isAndroid) {
+      return methodChannel.invokeMethod<String?>(
+        'getMd5Signature',
+      );
+    } else {
+      return null;
+    }
   }
 }

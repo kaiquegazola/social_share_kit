@@ -15,9 +15,13 @@ class _SocialShareKit implements SocialShareKitInterface {
   @override
   InstagramPlatform get instagram => GetIt.I.get();
 
-  /// Static getter to get the Facebook share instance
+  /// Static getter to get the TikTok share instance
   @override
   TikTokPlatform get tiktok => GetIt.I.get();
+
+  /// Static getter to get the Messenger share instance
+  @override
+  MessengerPlatform get messenger => GetIt.I.get();
 
   /// Returns an Map with the possible apps to share
   ///
@@ -28,6 +32,12 @@ class _SocialShareKit implements SocialShareKitInterface {
     return GetIt.I.get<AvailableAppsPlatform>().getAvailableApps();
   }
 
+  @override
+
+  /// This function returns the md5 signature of the application, useful for
+  /// registering in TikTok Developers.
+  ///
+  /// Only works on Android
   @override
   Future<String?> getMd5Signature() {
     return GetIt.I.get<AppSignaturePlatform>().getMd5AppSignature();

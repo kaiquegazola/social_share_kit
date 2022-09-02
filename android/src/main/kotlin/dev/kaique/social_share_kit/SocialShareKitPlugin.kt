@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import androidx.annotation.NonNull
 import dev.kaique.social_share_kit.enums.PlatformEnum
 import dev.kaique.social_share_kit.platforms.instagram.InstagramPlatform
+import dev.kaique.social_share_kit.platforms.messenger.MessengerPlatform
 import dev.kaique.social_share_kit.platforms.telegram.TelegramPlatform
 import dev.kaique.social_share_kit.platforms.tiktok.TikTokPlatform
 import dev.kaique.social_share_kit.services.PackageService
@@ -49,6 +50,9 @@ class SocialShareKitPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     }
                     "tiktok" -> {
                         TikTokPlatform.threatType(type, content, context, activity, result)
+                    }
+                    "messenger" -> {
+                        MessengerPlatform.threatType(type, content, context, activity, result)
                     }
                 }
             }

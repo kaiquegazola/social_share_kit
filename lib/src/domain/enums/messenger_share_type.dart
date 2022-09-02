@@ -1,0 +1,3 @@
+enum MessengerShareType {
+  link,
+}

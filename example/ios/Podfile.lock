@@ -1,10 +1,37 @@
 PODS:
+  - FacebookCore (0.9.0):
+    - FBSDKCoreKit (~> 5.0)
+  - FacebookLogin (0.9.0):
+    - FacebookCore (~> 0.9.0)
+    - FBSDKCoreKit (~> 5.0)
+    - FBSDKLoginKit (~> 5.0)
+  - FacebookShare (0.9.0):
+    - FacebookCore (~> 0.9.0)
+    - FBSDKCoreKit (~> 5.0)
+    - FBSDKShareKit (~> 5.0)
+  - FBSDKCoreKit (5.15.1):
+    - FBSDKCoreKit/Basics (= 5.15.1)
+    - FBSDKCoreKit/Core (= 5.15.1)
+  - FBSDKCoreKit/Basics (5.15.1)
+  - FBSDKCoreKit/Core (5.15.1):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (5.15.1):
+    - FBSDKLoginKit/Login (= 5.15.1)
+  - FBSDKLoginKit/Login (5.15.1):
+    - FBSDKCoreKit (~> 5.0)
+  - FBSDKShareKit (5.15.1):
+    - FBSDKShareKit/Share (= 5.15.1)
+  - FBSDKShareKit/Share (5.15.1):
+    - FBSDKCoreKit (~> 5.0)
   - Flutter (1.0.0)
   - path_provider_ios (0.0.1):
     - Flutter
   - social_share_kit (0.0.1):
+    - FacebookCore (= 0.9.0)
+    - FacebookLogin (= 0.9.0)
+    - FacebookShare (= 0.9.0)
     - Flutter
-    - TikTokOpenSDK
+    - TikTokOpenSDK (= 5.0.15)
   - TikTokOpenSDK (5.0.15)
 
 DEPENDENCIES:
@@ -14,6 +41,12 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - FacebookCore
+    - FacebookLogin
+    - FacebookShare
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - FBSDKShareKit
     - TikTokOpenSDK
 
 EXTERNAL SOURCES:
@@ -25,9 +58,15 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/social_share_kit/ios"
 
 SPEC CHECKSUMS:
+  FacebookCore: ba86524b66cfa86d0f8e65d08faa8504a9f732dd
+  FacebookLogin: 6cee9fd6e1fe976fe8f7eec199e27b28b14f5d63
+  FacebookShare: 85968ad1b1606c4944fb154924e425fd29184ea5
+  FBSDKCoreKit: 1d5acf7c9d7a2f92bb1a242dc60cae5b7adb91df
+  FBSDKLoginKit: f1ea8026a58b52d30c9f2e6a58ca7d813619fb83
+  FBSDKShareKit: 259737eab3cc807087374553abdf588b3096ba55
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
-  social_share_kit: 8bf6adf1e57e1b0594765478eada56edaf53a213
+  social_share_kit: 1e9b07b633cf0a66231fc2c16c740d0630de50de
   TikTokOpenSDK: dc1199ba9c6d7815aee0eaca6ec80ad13f7d9c1f
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3

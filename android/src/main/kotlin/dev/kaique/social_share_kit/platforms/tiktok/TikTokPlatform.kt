@@ -49,7 +49,7 @@ object TikTokPlatform {
                 isVideo = false,
                 isGreenScreen = true
             )
-            else -> throw Exception("$type is not a valid TelegramPlatform type")
+            else -> throw Exception("$type is not a valid TikTokPlatform type")
         }
 
     } catch (e: Exception) {

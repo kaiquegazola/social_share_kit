@@ -58,13 +58,16 @@ class _MyAppState extends State<MyApp> {
                               //   contentUrl: 'https://www.kaique.dev/',
                               // );
                               //
-                              SocialShareKit.tiktok.greenSreenImage(
-                                file: fileLoader.image,
-                              );
+                              // SocialShareKit.tiktok.greenSreenImage(
+                              //   file: fileLoader.image,
+                              // );
                               //
                               // SocialShareKit.instagram.directMessage(
                               //   message: 'Hi from Flutter',
                               // );
+                              SocialShareKit.messenger.link(
+                                link: 'https://www.kaique.dev/',
+                              );
                             },
                           )
                         ]

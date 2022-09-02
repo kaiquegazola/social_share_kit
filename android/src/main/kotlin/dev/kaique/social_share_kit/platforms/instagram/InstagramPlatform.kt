@@ -30,7 +30,7 @@ object InstagramPlatform {
             "post" -> sharePost(content, context, activity, result)
             "direct" -> shareDirect(content, context, activity, result)
             "directText" -> shareDirectText(content, context, activity, result)
-            else -> throw Exception("$type is not a valid TelegramPlatform type")
+            else -> throw Exception("$type is not a valid InstagramPlatform type")
         }
 
     } catch (e: Exception) {

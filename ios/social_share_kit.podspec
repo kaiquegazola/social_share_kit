@@ -16,7 +16,7 @@ A Flutter plugin thats support share files to social media like Tiktok, Instagra
   s.source_files = 'Classes/**/*'
   s.static_framework = true
   s.dependency 'Flutter'
-  s.dependency 'TikTokOpenSDK'
+  s.dependency 'TikTokOpenSDK', '5.0.15'
   s.platform = :ios, '11.0'
 
   # Flutter.framework does not contain a i386 slice.
