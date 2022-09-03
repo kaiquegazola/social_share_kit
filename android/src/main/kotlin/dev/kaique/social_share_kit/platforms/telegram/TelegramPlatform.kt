@@ -13,11 +13,11 @@ object TelegramPlatform {
     private const val PACKAGE_NAME: String = "org.telegram.messenger"
 
     fun threatType(
-        type: String,
-        content: HashMap<*, *>,
-        context: Context,
-        activity: Activity,
-        result: MethodChannel.Result,
+            type: String,
+            content: HashMap<*, *>,
+            context: Context,
+            activity: Activity,
+            result: MethodChannel.Result,
     ) {
         try {
             when (type) {
@@ -34,18 +34,18 @@ object TelegramPlatform {
 
         } catch (e: Exception) {
             result.error(
-                e.cause.toString(),
-                e.message,
-                null,
+                    e.cause.toString(),
+                    e.message,
+                    null,
             )
         }
     }
 
     private fun shareFile(
-        content: HashMap<*, *>,
-        context: Context,
-        activity: Activity,
-        result: MethodChannel.Result,
+            content: HashMap<*, *>,
+            context: Context,
+            activity: Activity,
+            result: MethodChannel.Result,
     ) {
         try {
             PackageService.verifyIfPackageIsInstalled(context, PACKAGE_NAME)
@@ -70,17 +70,17 @@ object TelegramPlatform {
 
         } catch (e: Exception) {
             result.error(
-                e.cause.toString(),
-                e.message,
-                null,
+                    e.cause.toString(),
+                    e.message,
+                    null,
             )
         }
     }
 
     private fun shareText(
-        content: HashMap<*, *>,
-        context: Context,
-        result: MethodChannel.Result,
+            content: HashMap<*, *>,
+            context: Context,
+            result: MethodChannel.Result,
     ) {
         try {
             PackageService.verifyIfPackageIsInstalled(context, PACKAGE_NAME)
@@ -89,8 +89,8 @@ object TelegramPlatform {
 
             val intent = Intent(Intent.ACTION_SEND)
             intent.putExtra(
-                Intent.EXTRA_TEXT,
-                message,
+                    Intent.EXTRA_TEXT,
+                    message,
             )
             intent.type = "text/plain"
             intent.setPackage(PACKAGE_NAME)
@@ -104,9 +104,9 @@ object TelegramPlatform {
 
         } catch (e: Exception) {
             result.error(
-                e.cause.toString(),
-                e.message,
-                null,
+                    e.cause.toString(),
+                    e.message,
+                    null,
             )
         }
     }

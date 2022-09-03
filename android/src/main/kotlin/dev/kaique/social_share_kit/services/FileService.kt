@@ -22,9 +22,9 @@ object FileService : FileProvider() {
 
     fun grantUriPermission(activity: Activity, packageName: String, uri: Uri) {
         activity.grantUriPermission(
-            packageName,
-            uri,
-            Intent.FLAG_GRANT_READ_URI_PERMISSION
+                packageName,
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
         )
     }
 

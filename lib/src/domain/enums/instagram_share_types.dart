@@ -1,5 +1,6 @@
 enum InstagramShareType {
-  story,
+  storyImage,
+  storyVideo,
   post,
   direct,
   directText,

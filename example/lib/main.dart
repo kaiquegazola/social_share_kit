@@ -53,8 +53,9 @@ class _MyAppState extends State<MyApp> {
                             platformName: app.key,
                             action: '',
                             onPressed: () {
-                              SocialShareKit.instagram.story(
-                                file: fileLoader.video,
+                              SocialShareKit.instagram.storyVideo(
+                                video: fileLoader.video,
+                                backgroundImage: fileLoader.image,
                                 bottomBackgroundColor: Colors.red,
                                 topBackgroundColor: Colors.blue,
                                 contentUrl: 'https://www.kaique.dev/',

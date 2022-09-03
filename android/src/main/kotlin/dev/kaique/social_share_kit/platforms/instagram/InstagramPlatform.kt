@@ -26,7 +26,8 @@ object InstagramPlatform {
             result: MethodChannel.Result,
     ) = try {
         when (type) {
-            "story" -> shareStory(content, context, activity, result)
+            "storyImage" -> shareStoryImage(content, context, activity, result)
+            "storyVideo" -> shareStoryVideo(content, context, activity, result)
             "post" -> sharePost(content, context, activity, result)
             "direct" -> shareDirect(content, context, activity, result)
             "directText" -> shareDirectText(content, context, activity, result)
@@ -41,7 +42,7 @@ object InstagramPlatform {
         )
     }
 
-    private fun shareStory(
+    private fun shareStoryImage(
             content: HashMap<*, *>,
             context: Context,
             activity: Activity,
@@ -49,14 +50,14 @@ object InstagramPlatform {
     ) {
 
         try {
-            val filePath: String = content[PARAM_NAME_FILE_PATH] as String
+            val imagePath: String = content[PARAM_NAME_FILE_PATH] as String
             val backgroundPath: String? = content[PARAM_NAME_BACKGROUND_PATH] as String?
             val contentUrl: String? = content[PARAM_NAME_CONTENT_URL] as String?
             val topBackgroundColor: String? = content[PARAM_TOP_BACKGROUND_COLOR] as String?
             val bottomBackgroundColor: String? = content[PARAM_BOTTOM_BACKGROUND_COLOR] as String?
 
-            val fileUri = FileService.exportUriForFile(context, filePath)
-            FileService.grantUriPermission(activity, PlatformEnum.INSTAGRAM.packageName, fileUri)
+            val imageUri = FileService.exportUriForFile(context, imagePath)
+            FileService.grantUriPermission(activity, PlatformEnum.INSTAGRAM.packageName, imageUri)
 
             var backgroundUri: Uri? = null
             if (backgroundPath != null && backgroundPath.isNotEmpty()) {
@@ -68,12 +69,13 @@ object InstagramPlatform {
                 )
             }
 
+
             val intent = Intent("com.instagram.share.ADD_TO_STORY").apply {
-                type = FileService.getMimeType(context, fileUri)
+                type = FileService.getMimeType(context, imageUri)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 putExtra("source_application", context.packageName)
-                putExtra("interactive_asset_uri", fileUri)
+                putExtra("interactive_asset_uri", imageUri)
                 putExtra("content_url", contentUrl)
                 if (backgroundUri != null) {
                     setDataAndType(
@@ -102,6 +104,47 @@ object InstagramPlatform {
             )
         }
     }
+
+
+    private fun shareStoryVideo(
+            content: HashMap<*, *>,
+            context: Context,
+            activity: Activity,
+            result: MethodChannel.Result
+    ) {
+
+        try {
+            val videoPath: String = content[PARAM_NAME_FILE_PATH] as String
+            val contentUrl: String? = content[PARAM_NAME_CONTENT_URL] as String?
+
+            val videoUri = FileService.exportUriForFile(context, videoPath)
+            FileService.grantUriPermission(activity, PlatformEnum.INSTAGRAM.packageName, videoUri)
+
+            val intent = Intent("com.instagram.share.ADD_TO_STORY").apply {
+                setDataAndType(videoUri, FileService.getMimeType(context, videoUri))
+                setPackage("com.instagram.android")
+                putExtra("content_url", contentUrl)
+                putExtra("source_application", context.packageName)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+
+            if (activity.packageManager.resolveActivity(intent, 0) != null) {
+                context.startActivity(intent)
+                result.success(true)
+            } else {
+                result.success(false)
+            }
+
+        } catch (e: Exception) {
+            result.error(
+                    e.cause.toString(),
+                    e.message,
+                    null,
+            )
+        }
+    }
+
 
     private fun sharePost(
             content: HashMap<*, *>,

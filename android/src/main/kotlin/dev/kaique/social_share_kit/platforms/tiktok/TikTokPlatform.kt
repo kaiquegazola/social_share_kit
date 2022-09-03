@@ -18,55 +18,55 @@ object TikTokPlatform {
     private const val PARAM_NAME_FILE_PATH: String = "filePath"
 
     fun threatType(
-        type: String,
-        content: HashMap<*, *>,
-        context: Context,
-        activity: Activity,
-        result: MethodChannel.Result,
+            type: String,
+            content: HashMap<*, *>,
+            context: Context,
+            activity: Activity,
+            result: MethodChannel.Result,
     ) = try {
         when (type) {
             "video" -> {
                 shareToTikTok(
-                    content, context, activity, result,
-                    isVideo = true,
-                    isGreenScreen = false
+                        content, context, activity, result,
+                        isVideo = true,
+                        isGreenScreen = false
                 )
             }
             "greenScreenVideo" -> {
                 shareToTikTok(
-                    content, context, activity, result,
-                    isVideo = true,
-                    isGreenScreen = true
+                        content, context, activity, result,
+                        isVideo = true,
+                        isGreenScreen = true
                 )
             }
             "image" -> shareToTikTok(
-                content, context, activity, result,
-                isVideo = false,
-                isGreenScreen = false
+                    content, context, activity, result,
+                    isVideo = false,
+                    isGreenScreen = false
             )
             "greenScreenImage" -> shareToTikTok(
-                content, context, activity, result,
-                isVideo = false,
-                isGreenScreen = true
+                    content, context, activity, result,
+                    isVideo = false,
+                    isGreenScreen = true
             )
             else -> throw Exception("$type is not a valid TikTokPlatform type")
         }
 
     } catch (e: Exception) {
         result.error(
-            e.cause.toString(),
-            e.message,
-            null,
+                e.cause.toString(),
+                e.message,
+                null,
         )
     }
 
     private fun shareToTikTok(
-        arguments: Any,
-        context: Context,
-        activity: Activity,
-        result: MethodChannel.Result,
-        isVideo: Boolean,
-        isGreenScreen: Boolean,
+            arguments: Any,
+            context: Context,
+            activity: Activity,
+            result: MethodChannel.Result,
+            isVideo: Boolean,
+            isGreenScreen: Boolean,
     ) {
         try {
             val map = arguments as HashMap<*, *>
@@ -84,7 +84,7 @@ object TikTokPlatform {
             mUri.add(fileUri.toString())
 
             val shareRequestBuilder = ShareRequest.builder()
-                .mediaPaths(mUri)
+                    .mediaPaths(mUri)
 
             if (isVideo) {
                 shareRequestBuilder.mediaType(ShareRequest.MediaType.VIDEO)
@@ -111,22 +111,22 @@ object TikTokPlatform {
 
         } catch (e: Exception) {
             result.error(
-                e.cause.toString(),
-                e.message,
-                null,
+                    e.cause.toString(),
+                    e.message,
+                    null,
             )
         }
     }
 
     private fun giveTikTokUriPermissions(activity: Activity, fileUri: Uri) {
         val packages = listOf(
-            "com.zhiliaoapp.musically",
-            "com.ss.android.ugc.trill",
+                "com.zhiliaoapp.musically",
+                "com.ss.android.ugc.trill",
         )
         for (pkg in packages) {
             activity.grantUriPermission(
-                "com.zhiliaoapp.musically",
-                fileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION,
+                    "com.zhiliaoapp.musically",
+                    fileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION,
             )
         }
     }

@@ -26,8 +26,8 @@ class InstagramPlatformAdapter implements InstagramPlatform {
   }
 
   @override
-  Future<bool> story({
-    required File file,
+  Future<bool> storyImage({
+    required File image,
     String? contentUrl,
     File? backgroundImage,
     Color? topBackgroundColor,
@@ -37,13 +37,30 @@ class InstagramPlatformAdapter implements InstagramPlatform {
       SocialShareEntity(
         platform: platform,
         content: InstagramModel(
-          file: file,
+          file: image,
           backgroundFile: backgroundImage,
           contentUrl: contentUrl,
           bottomBackgroundColor: bottomBackgroundColor,
           topBackgroundColor: topBackgroundColor,
         ).toStoryMap(),
-        type: InstagramShareType.story.name,
+        type: InstagramShareType.storyImage.name,
+      ),
+    );
+  }
+
+  @override
+  Future<bool> storyVideo({
+    required File video,
+    String? contentUrl,
+  }) {
+    return _socialShare.share<bool>(
+      SocialShareEntity(
+        platform: platform,
+        content: InstagramModel(
+          file: video,
+          contentUrl: contentUrl,
+        ).toStoryMap(),
+        type: InstagramShareType.storyVideo.name,
       ),
     );
   }

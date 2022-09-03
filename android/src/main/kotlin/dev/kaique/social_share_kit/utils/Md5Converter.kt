@@ -5,33 +5,25 @@ import java.security.MessageDigest
 object Md5Converter {
 
     private val hexDigits = charArrayOf(
-        48.toChar(),
-        49.toChar(),
-        50.toChar(),
-        51.toChar(),
-        52.toChar(),
-        53.toChar(),
-        54.toChar(),
-        55.toChar(),
-        56.toChar(),
-        57.toChar(),
-        97.toChar(),
-        98.toChar(),
-        99.toChar(),
-        100.toChar(),
-        101.toChar(),
-        102.toChar()
+            48.toChar(),
+            49.toChar(),
+            50.toChar(),
+            51.toChar(),
+            52.toChar(),
+            53.toChar(),
+            54.toChar(),
+            55.toChar(),
+            56.toChar(),
+            57.toChar(),
+            97.toChar(),
+            98.toChar(),
+            99.toChar(),
+            100.toChar(),
+            101.toChar(),
+            102.toChar()
     )
 
-    fun hexdigest(paramString: String): String? {
-        try {
-            return hexdigest(paramString.toByteArray())
-        } catch (localException: java.lang.Exception) {
-        }
-        return null
-    }
-
-    fun hexdigest(paramArrayOfByte: ByteArray?): String? {
+    fun hexDigest(paramArrayOfByte: ByteArray?): String? {
         try {
             val localMessageDigest: MessageDigest = MessageDigest.getInstance("MD5")
             localMessageDigest.update(paramArrayOfByte)
@@ -53,22 +45,3 @@ object Md5Converter {
         return null
     }
 }
-
-private val hexDigits = charArrayOf(
-    48.toChar(),
-    49.toChar(),
-    50.toChar(),
-    51.toChar(),
-    52.toChar(),
-    53.toChar(),
-    54.toChar(),
-    55.toChar(),
-    56.toChar(),
-    57.toChar(),
-    97.toChar(),
-    98.toChar(),
-    99.toChar(),
-    100.toChar(),
-    101.toChar(),
-    102.toChar()
-)

@@ -28,8 +28,8 @@ object PackageService {
     fun getBundleMetaData(context: Context, key: String): String? {
         return try {
             val ai: ApplicationInfo = context.packageManager.getApplicationInfo(
-                context.packageName,
-                PackageManager.GET_META_DATA
+                    context.packageName,
+                    PackageManager.GET_META_DATA
             )
             val bundle = ai.metaData
             bundle.getString(key)
@@ -57,11 +57,11 @@ object PackageService {
                 return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     val signInfo = packageInfo.signingInfo
                     val signatures: Array<Signature> = signInfo.apkContentsSigners
-                    Md5Converter.hexdigest(signatures[0].toByteArray())
+                    Md5Converter.hexDigest(signatures[0].toByteArray())
                 } else {
                     @Suppress("DEPRECATION")
                     val signatures: Array<Signature> = packageInfo.signatures
-                    Md5Converter.hexdigest(signatures[0].toByteArray())
+                    Md5Converter.hexDigest(signatures[0].toByteArray())
                 }
 
             }

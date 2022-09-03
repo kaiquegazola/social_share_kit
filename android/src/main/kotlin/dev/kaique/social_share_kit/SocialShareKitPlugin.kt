@@ -81,9 +81,9 @@ class SocialShareKitPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(apps)
         } catch (e: Exception) {
             result.error(
-                e.cause.toString(),
-                e.message,
-                null,
+                    e.cause.toString(),
+                    e.message,
+                    null,
             )
         }
     }
@@ -95,9 +95,9 @@ class SocialShareKitPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(signature)
         } catch (e: Exception) {
             result.error(
-                e.cause.toString(),
-                e.message,
-                null,
+                    e.cause.toString(),
+                    e.message,
+                    null,
             )
         }
     }
