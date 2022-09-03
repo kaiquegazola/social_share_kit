@@ -26,12 +26,19 @@ class InstagramModel {
     };
   }
 
-  Map<String, dynamic> toStoryMap() {
+  Map<String, dynamic> toStoryImageMap() {
     return <String, dynamic>{
       'filePath': file?.path,
       'backgroundPath': backgroundFile?.path,
       'topBackgroundColor': topBackgroundColor?.colorToHex,
       'bottomBackgroundColor': bottomBackgroundColor?.colorToHex,
+      'contentUrl': contentUrl,
+    };
+  }
+
+  Map<String, dynamic> toStoryVideoMap() {
+    return <String, dynamic>{
+      'filePath': file?.path,
       'contentUrl': contentUrl,
     };
   }

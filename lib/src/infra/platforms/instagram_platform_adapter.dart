@@ -42,7 +42,7 @@ class InstagramPlatformAdapter implements InstagramPlatform {
           contentUrl: contentUrl,
           bottomBackgroundColor: bottomBackgroundColor,
           topBackgroundColor: topBackgroundColor,
-        ).toStoryMap(),
+        ).toStoryImageMap(),
         type: InstagramShareType.storyImage.name,
       ),
     );
@@ -59,7 +59,7 @@ class InstagramPlatformAdapter implements InstagramPlatform {
         content: InstagramModel(
           file: video,
           contentUrl: contentUrl,
-        ).toStoryMap(),
+        ).toStoryVideoMap(),
         type: InstagramShareType.storyVideo.name,
       ),
     );

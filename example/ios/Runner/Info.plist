@@ -69,6 +69,8 @@
 	</array>
 	<key>TikTokAppID</key>
 	<string>awr3myql0y0792fg</string>
+	<key>FacebookAppID</key>
+	<string>468296258501402</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
