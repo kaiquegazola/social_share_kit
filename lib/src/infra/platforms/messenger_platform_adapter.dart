@@ -1,5 +1,5 @@
 import 'package:social_share_kit/src/domain/domain.dart';
-import 'package:social_share_kit/src/infra/dto/dtos.dart';
+import 'package:social_share_kit/src/infra/model/model.dart';
 
 class MessengerPlatformAdapter implements MessengerPlatform {
   MessengerPlatformAdapter({
@@ -14,7 +14,7 @@ class MessengerPlatformAdapter implements MessengerPlatform {
     return _socialShare.share<bool>(
       SocialShareEntity(
         platform: _platform,
-        content: MessengerDTO(
+        content: MessengerModel(
           link: link,
         ).toMap(),
         type: MessengerShareType.link.name,

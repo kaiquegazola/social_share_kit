@@ -53,20 +53,11 @@ class _MyAppState extends State<MyApp> {
                             platformName: app.key,
                             action: '',
                             onPressed: () {
-                              // SocialShareKit.instagram.direct(
-                              //   file: fileLoader.image,
-                              //   contentUrl: 'https://www.kaique.dev/',
-                              // );
-                              //
-                              // SocialShareKit.tiktok.greenSreenImage(
-                              //   file: fileLoader.image,
-                              // );
-                              //
-                              // SocialShareKit.instagram.directMessage(
-                              //   message: 'Hi from Flutter',
-                              // );
-                              SocialShareKit.messenger.link(
-                                link: 'https://www.kaique.dev/',
+                              SocialShareKit.instagram.story(
+                                file: fileLoader.video,
+                                bottomBackgroundColor: Colors.red,
+                                topBackgroundColor: Colors.blue,
+                                contentUrl: 'https://www.kaique.dev/',
                               );
                             },
                           )

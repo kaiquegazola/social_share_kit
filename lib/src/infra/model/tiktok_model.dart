@@ -1,7 +1,7 @@
 import 'dart:io';
 
-class TikTokDTO {
-  TikTokDTO({
+class TikTokModel {
+  TikTokModel({
     this.file,
   });
 

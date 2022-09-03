@@ -1,11 +1,10 @@
 package dev.kaique.social_share_kit.platforms.instagram
 
 import android.app.Activity
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
+import dev.kaique.social_share_kit.enums.PlatformEnum
 import dev.kaique.social_share_kit.services.FileService
 import io.flutter.plugin.common.MethodChannel
 
@@ -16,14 +15,15 @@ object InstagramPlatform {
     private const val PARAM_NAME_BACKGROUND_PATH: String = "backgroundPath"
     private const val PARAM_NAME_CONTENT_URL: String = "contentUrl"
     private const val PARAM_NAME_TEXT_MESSAGE: String = "textMessage"
-    private const val PACKAGE_NAME: String = "com.instagram.android"
+    private const val PARAM_TOP_BACKGROUND_COLOR: String = "topBackgroundColor"
+    private const val PARAM_BOTTOM_BACKGROUND_COLOR: String = "bottomBackgroundColor"
 
     fun threatType(
-        type: String,
-        content: HashMap<*, *>,
-        context: Context,
-        activity: Activity,
-        result: MethodChannel.Result,
+            type: String,
+            content: HashMap<*, *>,
+            context: Context,
+            activity: Activity,
+            result: MethodChannel.Result,
     ) = try {
         when (type) {
             "story" -> shareStory(content, context, activity, result)
@@ -35,46 +35,58 @@ object InstagramPlatform {
 
     } catch (e: Exception) {
         result.error(
-            e.cause.toString(),
-            e.message,
-            null,
+                e.cause.toString(),
+                e.message,
+                null,
         )
     }
 
     private fun shareStory(
-        content: HashMap<*, *>,
-        context: Context,
-        activity: Activity,
-        result: MethodChannel.Result
+            content: HashMap<*, *>,
+            context: Context,
+            activity: Activity,
+            result: MethodChannel.Result
     ) {
 
         try {
             val filePath: String = content[PARAM_NAME_FILE_PATH] as String
-            val backgroundPath: String = content[PARAM_NAME_BACKGROUND_PATH] as String
-            val contentUrl: String = content[PARAM_NAME_CONTENT_URL] as String
+            val backgroundPath: String? = content[PARAM_NAME_BACKGROUND_PATH] as String?
+            val contentUrl: String? = content[PARAM_NAME_CONTENT_URL] as String?
+            val topBackgroundColor: String? = content[PARAM_TOP_BACKGROUND_COLOR] as String?
+            val bottomBackgroundColor: String? = content[PARAM_BOTTOM_BACKGROUND_COLOR] as String?
 
             val fileUri = FileService.exportUriForFile(context, filePath)
-            FileService.grantUriPermission(activity, PACKAGE_NAME, fileUri)
+            FileService.grantUriPermission(activity, PlatformEnum.INSTAGRAM.packageName, fileUri)
 
             var backgroundUri: Uri? = null
-            if (backgroundPath.isNotEmpty()) {
+            if (backgroundPath != null && backgroundPath.isNotEmpty()) {
                 backgroundUri = FileService.exportUriForFile(context, backgroundPath)
-                FileService.grantUriPermission(activity, PACKAGE_NAME, backgroundUri)
-            }
-
-            val intent = Intent("com.instagram.share.ADD_TO_STORY")
-            intent.type = FileService.getMimeType(context, fileUri)
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.putExtra("source_application", context.packageName)
-            intent.putExtra("interactive_asset_uri", fileUri)
-            intent.putExtra("content_url", contentUrl)
-            if (backgroundUri != null) {
-                intent.setDataAndType(
-                    backgroundUri,
-                    FileService.getMimeType(context, backgroundUri)
+                FileService.grantUriPermission(
+                        activity,
+                        PlatformEnum.INSTAGRAM.packageName,
+                        backgroundUri,
                 )
             }
+
+            val intent = Intent("com.instagram.share.ADD_TO_STORY").apply {
+                type = FileService.getMimeType(context, fileUri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                putExtra("source_application", context.packageName)
+                putExtra("interactive_asset_uri", fileUri)
+                putExtra("content_url", contentUrl)
+                if (backgroundUri != null) {
+                    setDataAndType(
+                            backgroundUri,
+                            FileService.getMimeType(context, backgroundUri),
+                    )
+                }
+                if (topBackgroundColor != null && bottomBackgroundColor != null) {
+                    putExtra("top_background_color", topBackgroundColor)
+                    putExtra("bottom_background_color", bottomBackgroundColor)
+                }
+            }
+
             if (activity.packageManager.resolveActivity(intent, 0) != null) {
                 context.startActivity(intent)
                 result.success(true)
@@ -84,18 +96,18 @@ object InstagramPlatform {
 
         } catch (e: Exception) {
             result.error(
-                e.cause.toString(),
-                e.message,
-                null,
+                    e.cause.toString(),
+                    e.message,
+                    null,
             )
         }
     }
 
     private fun sharePost(
-        content: HashMap<*, *>,
-        context: Context,
-        activity: Activity,
-        result: MethodChannel.Result
+            content: HashMap<*, *>,
+            context: Context,
+            activity: Activity,
+            result: MethodChannel.Result
     ) {
 
         try {
@@ -104,12 +116,12 @@ object InstagramPlatform {
             val contentUrl: String = content[PARAM_NAME_CONTENT_URL] as String
 
             val fileUri = FileService.exportUriForFile(context, filePath)
-            FileService.grantUriPermission(activity, PACKAGE_NAME, fileUri)
+            FileService.grantUriPermission(activity, PlatformEnum.INSTAGRAM.packageName, fileUri)
 
             var backgroundUri: Uri? = null
             if (backgroundPath.isNotEmpty()) {
                 backgroundUri = FileService.exportUriForFile(context, backgroundPath)
-                FileService.grantUriPermission(activity, PACKAGE_NAME, backgroundUri)
+                FileService.grantUriPermission(activity, PlatformEnum.INSTAGRAM.packageName, backgroundUri)
             }
 
             val intent = Intent("com.instagram.share.ADD_TO_FEED")
@@ -120,8 +132,8 @@ object InstagramPlatform {
             intent.putExtra("content_url", contentUrl)
             if (backgroundUri != null) {
                 intent.setDataAndType(
-                    backgroundUri,
-                    FileService.getMimeType(context, backgroundUri)
+                        backgroundUri,
+                        FileService.getMimeType(context, backgroundUri)
                 )
             }
             if (activity.packageManager.resolveActivity(intent, 0) != null) {
@@ -133,18 +145,18 @@ object InstagramPlatform {
 
         } catch (e: Exception) {
             result.error(
-                e.cause.toString(),
-                e.message,
-                null,
+                    e.cause.toString(),
+                    e.message,
+                    null,
             )
         }
     }
 
     private fun shareDirect(
-        content: HashMap<*, *>,
-        context: Context,
-        activity: Activity,
-        result: MethodChannel.Result
+            content: HashMap<*, *>,
+            context: Context,
+            activity: Activity,
+            result: MethodChannel.Result
     ) {
 
         try {
@@ -156,13 +168,13 @@ object InstagramPlatform {
             var fileUri: Uri? = null
             if (filePath != null) {
                 fileUri = FileService.exportUriForFile(context, filePath)
-                FileService.grantUriPermission(activity, PACKAGE_NAME, fileUri)
+                FileService.grantUriPermission(activity, PlatformEnum.INSTAGRAM.packageName, fileUri)
             }
 
             var backgroundUri: Uri? = null
             if (backgroundPath != null) {
                 backgroundUri = FileService.exportUriForFile(context, backgroundPath)
-                FileService.grantUriPermission(activity, PACKAGE_NAME, backgroundUri)
+                FileService.grantUriPermission(activity, PlatformEnum.INSTAGRAM.packageName, backgroundUri)
             }
 
             val intent = Intent(Intent.ACTION_SEND)
@@ -173,12 +185,12 @@ object InstagramPlatform {
             intent.putExtra("content_url", contentUrl)
             intent.putExtra("source_application", context.packageName)
             intent.putExtra(Intent.EXTRA_TITLE, contentUrl)
-            intent.setPackage("com.instagram.android")
+            intent.setPackage(PlatformEnum.INSTAGRAM.packageName)
 
             if (backgroundUri != null) {
                 intent.setDataAndType(
-                    backgroundUri,
-                    FileService.getMimeType(context, backgroundUri)
+                        backgroundUri,
+                        FileService.getMimeType(context, backgroundUri)
                 )
             }
 
@@ -191,18 +203,18 @@ object InstagramPlatform {
 
         } catch (e: Exception) {
             result.error(
-                e.cause.toString(),
-                e.message,
-                null,
+                    e.cause.toString(),
+                    e.message,
+                    null,
             )
         }
     }
 
     private fun shareDirectText(
-        content: HashMap<*, *>,
-        context: Context,
-        activity: Activity,
-        result: MethodChannel.Result
+            content: HashMap<*, *>,
+            context: Context,
+            activity: Activity,
+            result: MethodChannel.Result
     ) {
 
         try {
@@ -212,7 +224,7 @@ object InstagramPlatform {
                 type = "text/plain"
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 putExtra(Intent.EXTRA_TEXT, textMessage)
-                setPackage("com.instagram.android")
+                setPackage(PlatformEnum.INSTAGRAM.packageName)
             }
 
             if (activity.packageManager.resolveActivity(intent, 0) != null) {
@@ -224,9 +236,9 @@ object InstagramPlatform {
 
         } catch (e: Exception) {
             result.error(
-                e.cause.toString(),
-                e.message,
-                null,
+                    e.cause.toString(),
+                    e.message,
+                    null,
             )
         }
     }

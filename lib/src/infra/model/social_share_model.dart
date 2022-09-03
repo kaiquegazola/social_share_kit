@@ -1,14 +1,14 @@
 import 'package:social_share_kit/src/domain/domain.dart';
 
-class SocialShareDTO extends SocialShareEntity {
-  SocialShareDTO({
+class SocialShareModel extends SocialShareEntity {
+  SocialShareModel({
     required super.platform,
     required super.content,
     required super.type,
   });
 
-  factory SocialShareDTO.fromEntity(SocialShareEntity entity) {
-    return SocialShareDTO(
+  factory SocialShareModel.fromEntity(SocialShareEntity entity) {
+    return SocialShareModel(
       platform: entity.platform,
       content: entity.content,
       type: entity.type,

@@ -1,5 +1,5 @@
-class MessengerDTO {
-  MessengerDTO({
+class MessengerModel {
+  MessengerModel({
     this.link,
   });
 

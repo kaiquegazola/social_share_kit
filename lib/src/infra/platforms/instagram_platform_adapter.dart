@@ -1,7 +1,8 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:social_share_kit/src/domain/domain.dart';
-import 'package:social_share_kit/src/infra/dto/dtos.dart';
+import 'package:social_share_kit/src/infra/model/model.dart';
 
 class InstagramPlatformAdapter implements InstagramPlatform {
   InstagramPlatformAdapter({
@@ -12,58 +13,49 @@ class InstagramPlatformAdapter implements InstagramPlatform {
   final SocialPlaform platform = SocialPlaform.instagram;
 
   @override
-  Future<bool> direct({required File file, String? contentUrl}) {
-    return _socialShare.share<bool>(
-      SocialShareEntity(
-        platform: platform,
-        content: InstagramDTO(
-          file: file,
-          backgroundFile: file,
-          contentUrl: contentUrl,
-        ).toMap(),
-        type: InstagramShareType.direct.name,
-      ),
-    );
-  }
-
-  @override
   Future<bool> post({required File file, String? contentUrl}) {
     return _socialShare.share<bool>(
       SocialShareEntity(
         platform: platform,
-        content: InstagramDTO(
+        content: InstagramModel(
           file: file,
-          backgroundFile: file,
-          contentUrl: contentUrl,
-        ).toMap(),
+        ).toPostMap(),
         type: InstagramShareType.post.name,
       ),
     );
   }
 
   @override
-  Future<bool> story({required File file, String? contentUrl}) {
+  Future<bool> story({
+    required File file,
+    String? contentUrl,
+    File? backgroundImage,
+    Color? topBackgroundColor,
+    Color? bottomBackgroundColor,
+  }) {
     return _socialShare.share<bool>(
       SocialShareEntity(
         platform: platform,
-        content: InstagramDTO(
+        content: InstagramModel(
           file: file,
-          backgroundFile: file,
+          backgroundFile: backgroundImage,
           contentUrl: contentUrl,
-        ).toMap(),
+          bottomBackgroundColor: bottomBackgroundColor,
+          topBackgroundColor: topBackgroundColor,
+        ).toStoryMap(),
         type: InstagramShareType.story.name,
       ),
     );
   }
 
   @override
-  Future<bool> directMessage({required String message}) {
+  Future<bool> directText({required String message}) {
     return _socialShare.share<bool>(
       SocialShareEntity(
         platform: platform,
-        content: InstagramDTO(
+        content: InstagramModel(
           textMessage: message,
-        ).toMap(),
+        ).toDirectMap(),
         type: InstagramShareType.directText.name,
       ),
     );

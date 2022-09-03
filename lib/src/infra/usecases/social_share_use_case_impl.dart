@@ -1,7 +1,7 @@
 import 'package:social_share_kit/src/domain/entities/social_share_entity.dart';
 import 'package:social_share_kit/src/domain/services/platform_service_interface.dart';
 import 'package:social_share_kit/src/domain/usecases/usecases.dart';
-import 'package:social_share_kit/src/infra/dto/dtos.dart';
+import 'package:social_share_kit/src/infra/model/model.dart';
 
 class SocialShareUseCaseImpl implements SocialShareUseCase {
   SocialShareUseCaseImpl({
@@ -12,10 +12,10 @@ class SocialShareUseCaseImpl implements SocialShareUseCase {
 
   @override
   Future<T> share<T>(SocialShareEntity socialShare) {
-    final dto = SocialShareDTO.fromEntity(socialShare);
+    final model = SocialShareModel.fromEntity(socialShare);
 
     return _platformService.share<T>(
-      dto.toMap(),
+      model.toMap(),
     );
   }
 }

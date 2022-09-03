@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:social_share_kit/src/domain/domain.dart';
-import 'package:social_share_kit/src/infra/dto/dtos.dart';
+import 'package:social_share_kit/src/infra/model/model.dart';
 
 class TikTokPlatformAdapter implements TikTokPlatform {
   TikTokPlatformAdapter({
@@ -16,7 +16,7 @@ class TikTokPlatformAdapter implements TikTokPlatform {
     return _socialShare.share<bool>(
       SocialShareEntity(
         platform: _platform,
-        content: TikTokDTO(
+        content: TikTokModel(
           file: file,
         ).toMap(),
         type: TikTokShareType.greenScreenImage.name,
@@ -29,7 +29,7 @@ class TikTokPlatformAdapter implements TikTokPlatform {
     return _socialShare.share<bool>(
       SocialShareEntity(
         platform: _platform,
-        content: TikTokDTO(
+        content: TikTokModel(
           file: file,
         ).toMap(),
         type: TikTokShareType.greenScreenVideo.name,
@@ -42,7 +42,7 @@ class TikTokPlatformAdapter implements TikTokPlatform {
     return _socialShare.share<bool>(
       SocialShareEntity(
         platform: _platform,
-        content: TikTokDTO(
+        content: TikTokModel(
           file: file,
         ).toMap(),
         type: TikTokShareType.image.name,
@@ -55,7 +55,7 @@ class TikTokPlatformAdapter implements TikTokPlatform {
     return _socialShare.share<bool>(
       SocialShareEntity(
         platform: _platform,
-        content: TikTokDTO(
+        content: TikTokModel(
           file: file,
         ).toMap(),
         type: TikTokShareType.video.name,
