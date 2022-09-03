@@ -30,7 +30,7 @@ This plugin was heavily inspired on [social_share](https://pub.dev/packages/soci
   - [ ] Story
   - [ ] Post
 - [ ] Instagram Share
-  - [ ] Story
+  - [X] Story (Image / Video )
   - [ ] Post
   - [x] Direct Text
 - [ ] Messenger Share
@@ -121,6 +121,44 @@ If you are going to share in **TikTok**, insert the following block of code in `
 ```
 
 ## 🍎 iOS Setup
+
+### First, you need to to register the url schemes that the application can handle
+
+In the `Info.plist` file, add the following array configuration:
+```
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>tiktokopensdk</string>
+    <string>tiktoksharesdk</string>
+    <string>snssdk1180</string>
+    <string>snssdk1233</string>
+    <string>instagram</string>
+    <string>instagram-stories</string>
+    <string>fb</string>
+    <string>fbauth2</string>
+    <string>fbshareextension</string>
+    <string>fbapi</string>
+    <string>facebook-reels</string>
+    <string>facebook-stories</string>
+    <string>fb-messenger-share-api</string>
+    <string>fb-messenger</string>
+    <string>tg</string>
+    <string>whatsapp</string>
+    <string>twitter</string>
+</array>
+```
+
+If you are going to share in **Facebook**, insert the following block of code in `Info.plist`:
+```
+<key>FacebookAppID</key>
+<string>INSERT YOUR APP ID FROM FACEBOOK DEVELOPERS</string>
+```
+
+If you are going to share in **TikTok**, insert the following block of code in `Info.plist`:
+```
+<key>TikTokAppID</key>
+<string>INSERT YOUR CLIENT KEY FROM TIKTOK DEVELOPERS</string>
+```
 
 ## 📚 Usage
 
