@@ -23,6 +23,10 @@ class _SocialShareKit implements SocialShareKitInterface {
   @override
   MessengerPlatform get messenger => GetIt.I.get();
 
+  /// Static getter to get the Twitter share instance
+  @override
+  TwitterPlatform get twitter => GetIt.I.get();
+
   /// Returns an Map with the possible apps to share
   ///
   /// May return an empty map if it is not possible to get the share available
