@@ -74,7 +74,7 @@ class SocialShareKitPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val pm: PackageManager = context.packageManager
             val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)
             PlatformEnum.values().forEach { platform ->
-                apps[platform.name.toLowerCase()] = packages.any {
+                apps[platform.name.lowercase()] = packages.any {
                     it.packageName.toString().contentEquals(platform.packageName)
                 }
             }
