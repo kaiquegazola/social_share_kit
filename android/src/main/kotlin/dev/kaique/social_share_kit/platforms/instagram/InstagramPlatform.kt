@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import dev.kaique.social_share_kit.enums.PlatformEnum
 import dev.kaique.social_share_kit.services.FileService
+import dev.kaique.social_share_kit.services.PackageService
 import io.flutter.plugin.common.MethodChannel
 
 
@@ -60,7 +61,7 @@ object InstagramPlatform {
             FileService.grantUriPermission(activity, PlatformEnum.INSTAGRAM.packageName, imageUri)
 
             var backgroundUri: Uri? = null
-            if (backgroundPath != null && backgroundPath.isNotEmpty()) {
+            if (!backgroundPath.isNullOrEmpty()) {
                 backgroundUri = FileService.exportUriForFile(context, backgroundPath)
                 FileService.grantUriPermission(
                         activity,
@@ -69,12 +70,13 @@ object InstagramPlatform {
                 )
             }
 
+            val facebookAppId = PackageService.getBundleMetaData(context, "FacebookAppID")
 
             val intent = Intent("com.instagram.share.ADD_TO_STORY").apply {
                 type = FileService.getMimeType(context, imageUri)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                putExtra("source_application", context.packageName)
+                putExtra("source_application", facebookAppId)
                 putExtra("interactive_asset_uri", imageUri)
                 putExtra("content_url", contentUrl)
                 if (backgroundUri != null) {
