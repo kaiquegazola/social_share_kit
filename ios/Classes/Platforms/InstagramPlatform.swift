@@ -8,82 +8,73 @@ class InstagramPlatform {
     private static var PARAM_NAME_CONTENT_URL: String = "contentUrl"
     private static var PARAM_NAME_TEXT_MESSAGE: String = "textMessage"
 
-    static func threatType(type: String, content: Dictionary<String, Any?>, result: @escaping FlutterResult) {
-        switch (type) {
+    static func threatType(type: String, content: [String: Any?], result: @escaping FlutterResult) {
+        switch type {
         case "storyImage":
             shareStoryImage(content: content, result: result)
-            break
         case "storyVideo":
             shareStoryVideo(content: content, result: result)
-            break
         case "post":
             break
         case "direct":
             break
         case "directText":
             shareDirectText(content: content, result: result)
-            break
         default:
             result(FlutterError(code: "invalid_type", message: "\(type) is not a valid InstagramPlatform type", details: nil))
-            break
         }
     }
 
-    private static func shareStoryImage(content: Dictionary<String, Any?>, result: @escaping FlutterResult) {
+    private static func shareStoryImage(content: [String: Any?], result: @escaping FlutterResult) {
         guard let imagePath = content[PARAM_NAME_FILE_PATH] as? String else {
             result(FlutterError(code: "missing_image", message: "Missing image path parameter", details: nil))
             return
         }
 
-        let image = UIImage(contentsOfFile: imagePath)
-        let backgroundPath = content[PARAM_NAME_BACKGROUND_PATH] as? String;
-        var backgroundImage: UIImage?;
-        if (backgroundPath != nil) {
-            backgroundImage = UIImage(contentsOfFile: backgroundPath!)
+        guard let image = UIImage(contentsOfFile: imagePath)?.pngData() else {
+            result(FlutterError(code: "invalid_image", message: "Could not convert image to PNG data", details: nil))
+            return
         }
 
-        let topBackgroundColor = content[PARAM_NAME_TOP_BACKGROUND_COLOR] as? String;
-        let bottomBackgroundColor = content[PARAM_NAME_BOTTOM_BACKGROUND_COLOR] as? String;
-        let contentUrl = content[PARAM_NAME_CONTENT_URL] as? String;
+        let backgroundPath = content[PARAM_NAME_BACKGROUND_PATH] as? String
+        var backgroundImageData: Data?
+        if let backgroundPath = backgroundPath, let backgroundImage = UIImage(contentsOfFile: backgroundPath)?.pngData() {
+            backgroundImageData = backgroundImage
+        }
+
+        let topBackgroundColor = content[PARAM_NAME_TOP_BACKGROUND_COLOR] as? String
+        let bottomBackgroundColor = content[PARAM_NAME_BOTTOM_BACKGROUND_COLOR] as? String
+        let contentUrl = content[PARAM_NAME_CONTENT_URL] as? String
         let appID = Bundle.main.object(forInfoDictionaryKey: "FacebookAppID") as? String
 
-        DispatchQueue.main.async(execute: {
-            let shareScheme = "instagram-stories://share";
-
-            guard let url = URL(string: shareScheme) else {
+        DispatchQueue.main.async {
+            guard let appID = appID, let urlScheme = URL(string: "instagram-stories://share?source_application=\(appID)") else {
                 result(false)
                 return
             }
 
-            var items: [[String: Any]] = []
-            if (image != nil) {
-                items.append(["com.instagram.sharedSticker.stickerImage": image!])
+            var items: [[String: Any]] = [["com.instagram.sharedSticker.stickerImage": image]]
+            if let backgroundImageData = backgroundImageData {
+                items.append(["com.instagram.sharedSticker.backgroundImage": backgroundImageData])
             }
-            if (backgroundImage != nil) {
-                items.append(["com.instagram.sharedSticker.backgroundImage": backgroundImage!])
+            if let topBackgroundColor = topBackgroundColor, let bottomBackgroundColor = bottomBackgroundColor {
+                items.append(["com.instagram.sharedSticker.backgroundTopColor": topBackgroundColor, "com.instagram.sharedSticker.backgroundBottomColor": bottomBackgroundColor])
             }
-            if (topBackgroundColor != nil && bottomBackgroundColor != nil) {
-                items.append(["com.instagram.sharedSticker.backgroundTopColor": topBackgroundColor!])
-                items.append(["com.instagram.sharedSticker.backgroundBottomColor": bottomBackgroundColor!])
-            }
-            if (contentUrl != nil) {
-                items.append(["com.instagram.sharedSticker.contentURL": contentUrl!])
-            }
-            if (appID != nil) {
-                items.append(["com.instagram.sharedSticker.appID": appID!])
+            if let contentUrl = contentUrl {
+                items.append(["com.instagram.sharedSticker.contentURL": contentUrl])
             }
 
-            if UIApplication.shared.canOpenURL(url) {
+            if UIApplication.shared.canOpenURL(urlScheme) {
                 UIPasteboard.general.setItems(items)
-                UIApplication.shared.open(url)
+                UIApplication.shared.open(urlScheme)
+                result(true)
             } else {
                 result(false)
             }
-        })
-
+        }
     }
 
-    private static func shareStoryVideo(content: Dictionary<String, Any?>, result: @escaping FlutterResult) {
+    private static func shareStoryVideo(content: [String: Any?], result: @escaping FlutterResult) {
         guard let videoPath = content[PARAM_NAME_FILE_PATH] as? String else {
             result(FlutterError(code: "missing_video", message: "Missing video path parameter", details: nil))
             return
@@ -94,7 +85,7 @@ class InstagramPlatform {
             return
         }
 
-        let videoURL = URL.init(fileURLWithPath: videoPath)
+        let videoURL = URL(fileURLWithPath: videoPath)
         var videoData: Data?
 
         do {
@@ -103,10 +94,10 @@ class InstagramPlatform {
             result(FlutterError(code: "error_accessing_video", message: error.localizedDescription, details: nil))
         }
 
-        let contentUrl = content[PARAM_NAME_CONTENT_URL] as? String;
+        let contentUrl = content[PARAM_NAME_CONTENT_URL] as? String
 
-        DispatchQueue.main.async(execute: {
-            let shareScheme = "instagram-stories://share";
+        DispatchQueue.main.async {
+            let shareScheme = "instagram-stories://share"
 
             guard let url = URL(string: shareScheme) else {
                 result(false)
@@ -114,10 +105,10 @@ class InstagramPlatform {
             }
 
             var items: [[String: Any]] = []
-            if (videoData != nil) {
+            if videoData != nil {
                 items.append(["com.instagram.sharedSticker.backgroundVideo": videoData!])
             }
-            if (contentUrl != nil) {
+            if contentUrl != nil {
                 items.append(["com.instagram.sharedSticker.contentURL": contentUrl!])
             }
             items.append(["com.instagram.sharedSticker.appID": appID])
@@ -128,17 +119,16 @@ class InstagramPlatform {
             } else {
                 result(false)
             }
-        })
-
+        }
     }
 
-    private static func shareDirectText(content: Dictionary<String, Any?>, result: @escaping FlutterResult) {
+    private static func shareDirectText(content: [String: Any?], result: @escaping FlutterResult) {
         guard let textMessage = content[PARAM_NAME_TEXT_MESSAGE] as? String else {
             result(FlutterError(code: "missing_text", message: "Missing text parameter to send", details: nil))
             return
         }
 
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             let shareUrl = "instagram://sharesheet?text=" + (textMessage.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")
 
             guard let url = URL(string: shareUrl) else {
@@ -151,8 +141,6 @@ class InstagramPlatform {
             } else {
                 result(false)
             }
-        })
-
+        }
     }
-
 }
