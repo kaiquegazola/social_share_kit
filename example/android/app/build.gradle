@@ -28,6 +28,9 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 android {
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
+    if (project.android.hasProperty("namespace")) {
+        namespace 'dev.kaique.socialsharekitexample'
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
