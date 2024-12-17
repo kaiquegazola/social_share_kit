@@ -14,5 +14,6 @@ abstract class InstagramPlatform {
     String? contentUrl,
   });
   Future<bool> post({required File file, String? contentUrl});
+  Future<bool> direct({required File file, String? contentUrl});
   Future<bool> directText({required String message});
 }

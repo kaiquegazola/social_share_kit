@@ -77,4 +77,16 @@ class InstagramPlatformAdapter implements InstagramPlatform {
       ),
     );
   }
+  @override
+  Future<bool> direct({required File file, String? contentUrl}) {
+    return _socialShare.share<bool>(
+      SocialShareEntity(
+        platform: platform,
+        content: InstagramModel(
+          file: file,
+        ).toPostMap(),
+        type: InstagramShareType.direct.name,
+      ),
+    );
+  }
 }
