@@ -53,10 +53,8 @@ class _MyAppState extends State<MyApp> {
                             platformName: app.key,
                             action: '',
                             onPressed: () {
-                              SocialShareKit.instagram.storyVideo(
-                                video: fileLoader.video,
-                                contentUrl: 'https://www.kaique.dev/',
-                              );
+                              SocialShareKit.instagram
+                                  .direct(file: fileLoader.video);
                             },
                           )
                         ]
