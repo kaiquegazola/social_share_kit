@@ -27,6 +27,10 @@ class _SocialShareKit implements SocialShareKitInterface {
   @override
   TwitterPlatform get twitter => GetIt.I.get();
 
+  /// Static getter to get the WhatsApp share instance
+  @override
+  WhatsAppPlatform get whatsapp => GetIt.I.get();
+
   /// Returns an Map with the possible apps to share
   ///
   /// May return an empty map if it is not possible to get the share available

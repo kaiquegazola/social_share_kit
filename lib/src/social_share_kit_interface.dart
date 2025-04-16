@@ -5,6 +5,7 @@ abstract class SocialShareKitInterface {
   TikTokPlatform get tiktok;
   MessengerPlatform get messenger;
   TwitterPlatform get twitter;
+  WhatsAppPlatform get whatsapp;
   Future<Map<String, bool>> getAvailableApps();
   Future<String?> getMd5Signature();
 }

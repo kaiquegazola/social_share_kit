@@ -9,6 +9,7 @@ import dev.kaique.social_share_kit.platforms.instagram.InstagramPlatform
 import dev.kaique.social_share_kit.platforms.messenger.MessengerPlatform
 import dev.kaique.social_share_kit.platforms.telegram.TelegramPlatform
 import dev.kaique.social_share_kit.platforms.tiktok.TikTokPlatform
+import dev.kaique.social_share_kit.platforms.WhatsAppPlatform
 import dev.kaique.social_share_kit.services.PackageService
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -53,6 +54,9 @@ class SocialShareKitPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     }
                     "messenger" -> {
                         MessengerPlatform.threatType(type, content, context, activity, result)
+                    }
+                    "whatsapp" -> {
+                        WhatsAppPlatform.threatType(type, content, context, activity, result)
                     }
                 }
             }

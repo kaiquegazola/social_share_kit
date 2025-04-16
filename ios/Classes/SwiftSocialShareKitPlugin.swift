@@ -40,6 +40,9 @@ public class SwiftSocialShareKitPlugin: NSObject, FlutterPlugin {
             case "twitter":
                 TwitterPlatform.threatType(type: type, content: content, result: result)
                 break
+            case "whatsapp":
+                WhatsAppPlatform.threatType(type: type, content: content, result: result)
+                break
             default:
                 result(FlutterError(code: "platform_not_implemented", message: "Platform \(platform) is not implemented.", details: nil))
             }

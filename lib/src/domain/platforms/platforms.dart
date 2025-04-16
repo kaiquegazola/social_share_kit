@@ -4,3 +4,4 @@ export 'instagram_platform.dart';
 export 'messenger_platform.dart';
 export 'tiktok_platform.dart';
 export 'twitter_platform.dart';
+export 'whatsapp_platform.dart';

@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:social_share_kit/src/domain/domain.dart';
 import 'package:social_share_kit/src/infra/infra.dart';
 import 'package:social_share_kit/src/infra/platforms/twitter_platform_adapter.dart';
+import 'package:social_share_kit/src/infra/platforms/whatsapp_platform_adapter.dart';
 
 /// It's a class that can be used to inject dependencies into other classes
 class Di {
@@ -15,6 +16,7 @@ class Di {
     _initTikTok();
     _initMessenger();
     _initTwitter();
+    _initWhatsApp();
   }
 
   static void _initMethodChannel() {
@@ -74,6 +76,14 @@ class Di {
   static void _initTwitter() {
     GetIt.I.registerFactory<TwitterPlatform>(
       () => TwitterPlatformAdapter(
+        socialShare: GetIt.I.get(),
+      ),
+    );
+  }
+
+  static void _initWhatsApp() {
+    GetIt.I.registerFactory<WhatsAppPlatform>(
+      () => WhatsAppPlatformAdapter(
         socialShare: GetIt.I.get(),
       ),
     );
